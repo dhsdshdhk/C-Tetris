@@ -21,15 +21,12 @@ struct block{
   Position p[4];
   char type;
   int crashed;
-
-  int id;
 };
 
 Block* spawnBlock(char* next_blocks){
   Block* b = malloc(sizeof(Block));
   b->type = next_blocks[0];
   b->crashed = 0;
-  b->id = rand()%5000;
 
   Position p;
 
@@ -287,8 +284,4 @@ char generateRandomType(){
 
 int blockHasCrashed(Block* b){
   return b->crashed;
-}
-
-int blockId(Block* b){
-  return b->id;
 }

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/time.h>
-#include <time.h>
 #include <errno.h>
 #include <unistd.h>
 #include <poll.h>
@@ -21,19 +20,6 @@ struct pollfd mypoll = { STDIN_FILENO, POLLIN|POLLPRI };
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-
-typedef struct information{
-  Block* b;
-  int level;
-  char** grid;
-
-  int height;
-  int width;
-  int score;
-  int lines;
-  char* next_blocks;
-
-} info;
 
 void processInput(char input, int* soft_drop);
 int waitMillis(int ms);
@@ -121,18 +107,6 @@ int waitMillis(int ms)
     n = pthread_cond_timedwait(&cond, &mutex, &ts);
     pthread_mutex_unlock(&mutex);
 
-    /*pthread_mutex_lock(&mutex);
-    int rc = 0;
-    while (!predicate && rc == 0)
-      rc = pthread_cond_timedwait(&cond, &mutex, &ts);
-    pthread_mutex_unlock(&mutex);*/
-
-    /*if (rc == 0) {
-        return 0;
-    } else if (rc == ETIMEDOUT) {
-        return 1;
-    }*/
-
     if (n == 0) {
         return 0;
     } else if (n == ETIMEDOUT) {
@@ -145,6 +119,7 @@ void* gravity(){
   char input = 's';
   int dummy_score = 0;
   int soft_drop = 0;
+
   while(1){
     do{
       if(waitMillis(1000 - level * 50)){
@@ -152,13 +127,4 @@ void* gravity(){
       }
     }while(!blockHasCrashed(b));
   }
-}
-
-info* getBlockInfo(Block* b, int level, char** grid){
-  info* block_info = malloc(sizeof(info));
-  block_info->b = b;
-  block_info->level = level;
-  block_info->grid = grid;
-
-  return block_info;
 }

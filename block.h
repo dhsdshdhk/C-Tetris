@@ -15,6 +15,5 @@ int isMoveAllowed(Block* b, char dir, char** grid);
 char* initializeNextBlocks();
 char generateRandomType();
 int blockHasCrashed(Block* b);
-int blockId(Block* b);
 
 #endif
