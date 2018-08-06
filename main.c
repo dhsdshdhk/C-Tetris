@@ -25,6 +25,7 @@ void processInput(char input, int* soft_drop);
 int waitMillis(int ms);
 void* gravity();
 void printInformation(int score, int level, int lines, char* next_blocks);
+void clearScreen();
 
 int main(){
 
@@ -40,9 +41,10 @@ int main(){
   b = spawnBlock(next_blocks);
   pthread_create(&gravity_thread, NULL, gravity, NULL);
 
-  printGrid(height, width, grid, b);
+  //printGrid(height, width, grid, b);
 
   do{
+    clearScreen();
     printInformation(score, level, lines, next_blocks);
     printGrid(height, width, grid, b);
 
@@ -126,7 +128,12 @@ void* gravity(){
 }
 
 void printInformation(int score, int level, int lines, char* next_blocks){
-  system("clear");
   printf("Score: %d\nLevel: %d\nLines: %d\n", score, level, lines);
   printf("Next blocks: %c, %c, %c\n", next_blocks[0], next_blocks[1], next_blocks[2]);
+}
+
+void clearScreen(){
+  for(int i = 0; i < 35; i++){
+    printf("\n");
+  }
 }
