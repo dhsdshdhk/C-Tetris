@@ -169,8 +169,9 @@ void moveBlock(Block* b, char dir, char** grid, int* score, int* soft_drop){
       for(int i = 0; i < 4; i++)
         b->p[i].y++;
       break;
-    case 'w':
-      turnBlock(grid, b);
+    case 'j':
+    case 'k':
+      turnBlock(grid, b, dir);
     }
 
 }
@@ -195,7 +196,7 @@ void addBlockToGrid(char** grid, Block* b){
       grid[b->p[i].x][b->p[i].y] = block;
 }
 
-void turnBlock(char** grid, Block* b){
+void turnBlock(char** grid, Block* b, char input){
   if(b->type == 'O')
     return;
 
@@ -209,8 +210,15 @@ void turnBlock(char** grid, Block* b){
     int x = b->p[i].x;
     int y = b->p[i].y;
 
-    temp->p[i].x = -(y - bb) + a;
-    temp->p[i].y = x - a + bb;
+    if(input == 'j'){
+      temp->p[i].x = -(y - bb) + a;
+      temp->p[i].y = x - a + bb;
+    }
+    else{
+      temp->p[i].x = (y - bb) + a;
+      temp->p[i].y = -(x - a) + bb;
+    }
+
 
   }
 
