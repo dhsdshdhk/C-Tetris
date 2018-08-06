@@ -14,7 +14,7 @@ extern int height;
 extern int width;
 
 Block* b;
-int level = 0;
+int level = 1;
 char** grid;
 struct pollfd mypoll = { STDIN_FILENO, POLLIN|POLLPRI };
 
@@ -24,35 +24,31 @@ pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 void processInput(char input, int* soft_drop);
 int waitMillis(int ms);
 void* gravity();
+void printInformation(int score, int level, int lines, char* next_blocks);
 
 int main(){
 
   srand(time(NULL));
   pthread_t gravity_thread;
 
-
   int score = 0;
   int lines = 0;
   int soft_drop = 0;
+  char input = ' ';
   grid = createGrid(height, width);
   char* next_blocks = initializeNextBlocks();
-
   b = spawnBlock(next_blocks);
-  char input = ' ';
-  void* ptr = &input;
   pthread_create(&gravity_thread, NULL, gravity, NULL);
 
   printGrid(height, width, grid, b);
 
   do{
-    system("clear");
-    printf("Score: %d\nLevel: %d\nLines: %d\n", score, level, lines);
-    printf("Next blocks: %c, %c, %c\n", next_blocks[0], next_blocks[1], next_blocks[2]);
+    printInformation(score, level, lines, next_blocks);
     printGrid(height, width, grid, b);
 
 
     system("stty raw");
-    if(poll(&mypoll, 1, 1000 - level * 50)){
+    if(poll(&mypoll, 1, 1050 - level * 50)){
       scanf("%c", &input);
     }
     system("stty cooked");
@@ -63,7 +59,7 @@ int main(){
     input = 'k';
 
     if(blockHasCrashed(b)){
-      clearLines(height, width, grid, &score, &level);
+      clearLines(height, width, grid, &score, &level, &lines);
       free(b);
 
       b = spawnBlock(next_blocks);
@@ -127,4 +123,10 @@ void* gravity(){
       }
     }while(!blockHasCrashed(b));
   }
+}
+
+void printInformation(int score, int level, int lines, char* next_blocks){
+  system("clear");
+  printf("Score: %d\nLevel: %d\nLines: %d\n", score, level, lines);
+  printf("Next blocks: %c, %c, %c\n", next_blocks[0], next_blocks[1], next_blocks[2]);
 }

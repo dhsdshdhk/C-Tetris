@@ -44,16 +44,18 @@ void printGrid(int h, int w, char** grid, Block* b){
     }
 }
 
-void clearLines(int h, int w, char** grid, int* score, int* level){
-int i;
-int j;
-int k;
+void clearLines(int h, int w, char** grid, int* score, int* level, int* lines){
+  int i;
+  int j;
+  int k;
 
-int lines_to_clean = 0;
+  int lines_to_clean = 0;
 
   for(i = h - 2; i > 0; i--)
     if(isLineOnlyChar(grid[i], block))
       lines_to_clean++;
+
+  (*lines) += lines_to_clean;
 
   switch(lines_to_clean){
     case 1:
@@ -69,7 +71,7 @@ int lines_to_clean = 0;
       *score += 1200 * (*level + 1);
   }
 
-  if(lines_to_clean)
+  if(lines_to_clean && ((*lines) % 2 == 0))
     (*level)++;
 
   for(int j = 0; j < lines_to_clean; j++){
