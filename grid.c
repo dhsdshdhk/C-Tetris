@@ -71,7 +71,7 @@ void clearLines(int h, int w, char** grid, int* score, int* level, int* lines){
       *score += 1200 * (*level + 1);
   }
 
-  if(lines_to_clean && ((*lines) % 2 == 0))
+  if(lines_to_clean && ((*lines) % 10 == 0))
     (*level)++;
 
   for(int j = 0; j < lines_to_clean; j++){
