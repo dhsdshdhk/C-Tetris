@@ -2,9 +2,12 @@
 A simple terminal based Tetris game.
 
 Features:
-  WASD controls
-  Score, level and line counters
-  Blocks drop 50ms faster at each new level
+  * WASD controls
+  * Score, level and line counters
+  * Blocks drop 50ms faster at each new level
   
-To do:
-  
+To do, from highest to lowest priority:
+  * Fix a bug that randomly causes a block to be moved down until crashing
+  * Allow blocks to rotate when near the wall
+  * Add clockwise and counterclockwise rotations
+  * Add hold block option
