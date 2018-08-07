@@ -18,7 +18,6 @@ FILE* fp;
 Block* b;
 int level = 1;
 char** grid;
-struct pollfd mypoll = { STDIN_FILENO, POLLIN|POLLPRI };
 struct termios orig_termios;
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -61,6 +60,7 @@ int main(){
     fprintf(fp, "%c (main)\n", input);
 
     if(blockHasCrashed(b)){
+      fprintf(fp, "crashed\n");
       waitMillis(150);
       clearLines(height, width, grid, &score, &level, &lines);
       free(b);
@@ -134,6 +134,7 @@ void* gravity(){
 void printInformation(int score, int level, int lines, char* next_blocks){
   printf("Score: %d\nLevel: %d\nLines: %d\n", score, level, lines);
   printf("Next blocks: %c, %c, %c\n", next_blocks[0], next_blocks[1], next_blocks[2]);
+  printf("Current block: %c at %dms\n", blockType(b), 1050 - level * 50);
 }
 
 void clearScreen(){

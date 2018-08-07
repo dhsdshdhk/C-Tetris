@@ -55,9 +55,9 @@ void clearLines(int h, int w, char** grid, int* score, int* level, int* lines){
     if(isLineOnlyChar(grid[i], block))
       lines_to_clean++;
 
-  (*lines) += lines_to_clean;
-
   switch(lines_to_clean){
+    case 0:
+      return;
     case 1:
       *score += 40 * (*level + 1);
       break;
@@ -71,8 +71,8 @@ void clearLines(int h, int w, char** grid, int* score, int* level, int* lines){
       *score += 1200 * (*level + 1);
   }
 
-  if(lines_to_clean && ((*lines) % 10 == 0))
-    (*level)++;
+  (*lines) += lines_to_clean;
+  (*level) = (*lines / 10) + 1;
 
   for(int j = 0; j < lines_to_clean; j++){
     for(i = h - 2; i > 0; i--)

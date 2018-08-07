@@ -127,6 +127,7 @@ Block* spawnBlock(char* next_blocks){
 
       p.y = 6;
       b->p[3] = p;
+      break;
   }
 
   next_blocks[0] = next_blocks[1];
@@ -292,4 +293,8 @@ char generateRandomType(){
 
 int blockHasCrashed(Block* b){
   return b->crashed;
+}
+
+char blockType(Block* b){
+  return b->type;
 }
