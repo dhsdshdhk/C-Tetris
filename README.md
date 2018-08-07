@@ -8,6 +8,7 @@ Features:
   
 To do, from highest to lowest priority:
   * Fix a bug that randomly causes a block to be moved down until crashing
+  * Fix a bug that allows the O block to rotate (it thinks it is a Z block)
   * Allow blocks to rotate when near the wall
   * ~~Add clockwise and counterclockwise rotation~~
   * Add hold block option
