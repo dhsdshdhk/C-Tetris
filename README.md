@@ -1,4 +1,4 @@
-# C_Tetris
+# C Tetris
 A simple terminal based Tetris game.
 
 Features:
